@@ -211,35 +211,6 @@ class Karuta:
         screen.blit(text, (self.x0+score_board_sukima, self.y0+GRID_SIZE[1]*BOARD_SIZE[1]+score_board_sukima+font_size))
         text=font.render(currenttext_r,True, color_char)
         screen.blit(text, (self.x0_2+score_board_sukima, self.y0+GRID_SIZE[1]*BOARD_SIZE[1]+score_board_sukima+font_size))
-        '''
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+score_board_sukima))
-        text=font.render("{}".format(self.score),True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size+score_board_sukima))
-        text=font.render("SCORE_R",True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*2+score_board_sukima))
-        text=font.render("{}".format(self.score_2),True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*3+score_board_sukima))
-        text=font.render("SCORE_SUM",True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*4+score_board_sukima))
-        text=font.render("{}".format(self.score+self.score_2),True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*5+score_board_sukima))
-        text=font.render("CARD_L",True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*7+score_board_sukima))
-        text=font.render("{}".format(self.obtainedcard),True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*8+score_board_sukima))
-        text=font.render("CARD_R",True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*9+score_board_sukima))
-        text=font.render("{}".format(self.obtainedcard_2),True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*10+score_board_sukima))
-        text=font.render("CARD_SUM",True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*11+score_board_sukima))
-        text=font.render("{}".format(self.obtainedcard+self.obtainedcard_2),True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*12+score_board_sukima))
-        text=font.render("TIME",True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*14+score_board_sukima))
-        text=font.render("{}".format(SECTION_TIME-int(cnt/FPS)),True, color_char)
-        screen.blit(text, (self.x0_2+BOARD_SIZE[0]*GRID_SIZE[0]+score_board_sukima, self.y0+font_size*15+score_board_sukima))
-        '''
 
     def draw_card(self, gridpos, card_id,cnt,stage):
         pos=(self.x0+gridpos[0] * GRID_SIZE[0]+SUKIMA, self.y0+gridpos[1] * GRID_SIZE[1]+SUKIMA)
@@ -267,6 +238,7 @@ class Karuta:
             hidescr.fill((colors_code_S30_alpha[self.col][0],colors_code_S30_alpha[self.col][1],colors_code_S30_alpha[self.col][2],alpha))
             screen.blit(hidescr,pos)
     def display_result(self):
+        maxscore=max(self.score,self.score_2)
         if self.cpuscore !=0:
             if self.obtainedcard > READ_CARDS/2:
                 se_shouri.play()
@@ -276,19 +248,19 @@ class Karuta:
                 se_shouri2.play()
                 font = pygame.font.Font(None, FONT_SIZE_RESULT)
                 text = font.render("Try again!", True, YELLOW)
-        elif self.score>=1400:
+        elif maxscore>=1400:
             se_shouri.play()
             font = pygame.font.Font(None, FONT_SIZE_RESULT)
             text = font.render("Fantastic!!", True, YELLOW)        
-        elif self.score>=1300:
+        elif maxscore>=1300:
             se_shouri2.play()
             font = pygame.font.Font(None, FONT_SIZE_RESULT)
             text = font.render("Congratulations!", True, YELLOW)
-        elif self.score>=1200:
+        elif maxscore>=1200:
             se_shouri3.play()
             font = pygame.font.Font(None, FONT_SIZE_RESULT)
             text = font.render("Good Job!", True, YELLOW)
-        elif self.score>=1100:
+        elif maxscore>=1100:
             se_shouri4.play()
             font = pygame.font.Font(None, FONT_SIZE_RESULT)
             text = font.render("Finish!", True, YELLOW)
@@ -520,5 +492,4 @@ async def main():
 
 
 asyncio.run(main())
-
     
