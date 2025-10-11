@@ -6,7 +6,7 @@ import asyncio
 GREEN = (0, 128, 0)
 YELLOW = (255, 155, 0)
 BOARD_SIZE=(5,4)
-GRID_SIZE=(165,220)
+GRID_SIZE=(155,210)
 CARD_SIZE=(145,200)
 FULL_CARDS=BOARD_SIZE[0]*BOARD_SIZE[1]
 READ_CARDS=FULL_CARDS-3
@@ -43,7 +43,7 @@ screenWidth = info.current_w
 screenHeight = info.current_h
 #screen = pygame.display.set_mode((screenWidth,screenHeight),pygame.RESIZABLE)
 screen = pygame.display.set_mode(SIZE,pygame.RESIZABLE)
-pygame.display.set_caption("Goshoku_Hyakunin_Isshu")
+pygame.display.set_caption("Goshoku_Hyakunin_Isshu_double")
 clock = pygame.time.Clock()
 
 se_binta01 = pygame.mixer.Sound("ogg/binta01.ogg")
@@ -368,8 +368,14 @@ class Karuta:
         self.x0=int((w-SIZE[0])/2)
         self.y0=int((h-SIZE[1])/2)
         self.x0_2=int((w-SIZE[0])/2)+GRID_SIZE[0]*BOARD_SIZE[0]
-
+def show_loading_screen():
+    font = pygame.font.Font(None, 24)
+    screen.blit(background_image, (0, 0), (0, 0, SIZE[0], SIZE[1]))
+    text = font.render("Goshoku Hyakunin Isshu       Loading ver.0.1w ...", True, (255, 255, 255))
+    screen.blit(text, (SIZE[0] // 2 - text.get_width() // 2, SIZE[1] // 2 - text.get_height() // 2))
+    pygame.display.flip()
 async def main():
+    show_loading_screen()    
     game = Karuta()
     running = True
     cnt=0
@@ -377,6 +383,7 @@ async def main():
     stage=0
     while running:
         game.sizecheck()
+        pygame.event.pump() 
         if stage==0:
             if cnt%(SECTION_TIME_SELECT*FPS)==0:
                 game.reset_section_select()
@@ -493,3 +500,4 @@ async def main():
 
 asyncio.run(main())
     
+
